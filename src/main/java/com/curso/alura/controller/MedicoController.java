@@ -9,9 +9,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/medicos")
@@ -21,25 +21,41 @@ public class MedicoController {
     private MedicoRepository repository;
     @PostMapping
     @Transactional
-    public void cadastrar(@RequestBody @Valid DadosCadastroMedico dadosCadastroMedico){
-        repository.save(new Medico(dadosCadastroMedico));
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dadosCadastroMedico, UriComponentsBuilder uriBuilder){
+        Medico medico = new Medico(dadosCadastroMedico);
+        repository.save(medico);
+        var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
     }
 
     @GetMapping
-    public Page<DadoListagemMedico> listar(@PageableDefault(size=10,sort={"nome"}) Pageable pageable){
-        return repository.findAllByAtivoTrue(pageable).map(DadoListagemMedico::new);
+    public ResponseEntity<Page<DadoListagemMedico>> listar(@PageableDefault(size=10,sort={"nome"}) Pageable pageable){
+        Page<DadoListagemMedico> medicosRetornados = repository.findAllByAtivoTrue(pageable).map(DadoListagemMedico::new);
+        return ResponseEntity.ok(medicosRetornados);
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoMedico dadosAtualizacaoMedico){
+    public ResponseEntity atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoMedico dadosAtualizacaoMedico){
         var optionalMedico = repository.findById(id);
         if(!optionalMedico.isPresent()){
             return ResponseEntity.status(NOT_FOUND).body("Médico Não encontrado.");
         }else{
             Medico medico = optionalMedico.get();
             medico.atualizarInfomacoes(dadosAtualizacaoMedico);
-            return ResponseEntity.status(OK).body("OK");
+            return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
+        }
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable Long id){
+        var optionalMedico = repository.findById(id);
+        if(!optionalMedico.isPresent()){
+            return ResponseEntity.status(NOT_FOUND).body("Médico Não encontrado.");
+        }else{
+            Medico medico = optionalMedico.get();
+            return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
         }
     }
 
