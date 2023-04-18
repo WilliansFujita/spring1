@@ -1,4 +1,4 @@
-package com.curso.alura.controller;
+package com.curso.alura.medico;
 
 import com.curso.alura.endereco.Endereco;
 import com.curso.alura.medico.Especialidade;
