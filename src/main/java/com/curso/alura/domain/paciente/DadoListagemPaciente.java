@@ -1,6 +1,6 @@
-package com.curso.alura.paciente;
+package com.curso.alura.domain.paciente;
 
-import com.curso.alura.endereco.Endereco;
+import com.curso.alura.domain.endereco.Endereco;
 
 public record DadoListagemPaciente(
         Long id,

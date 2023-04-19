@@ -1,4 +1,4 @@
-package com.curso.alura.medico;
+package com.curso.alura.domain.medico;
 
 public enum Especialidade {
 

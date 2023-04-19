@@ -1,6 +1,6 @@
-package com.curso.alura.medico;
+package com.curso.alura.domain.medico;
 
-import com.curso.alura.endereco.DadosCadastroEndereco;
+import com.curso.alura.domain.endereco.DadosCadastroEndereco;
 
 public record DadosAtualizacaoMedico(
         String nome,

@@ -1,9 +1,8 @@
-package com.curso.alura.medico;
+package com.curso.alura.domain.medico;
 
-import com.curso.alura.endereco.Endereco;
+import com.curso.alura.domain.endereco.Endereco;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.boot.autoconfigure.web.WebProperties;
 
 @Table(name = "medicos")
 @Entity(name = "Medico")

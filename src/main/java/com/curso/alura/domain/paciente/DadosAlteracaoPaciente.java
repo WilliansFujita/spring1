@@ -1,8 +1,7 @@
-package com.curso.alura.paciente;
+package com.curso.alura.domain.paciente;
 
-import com.curso.alura.endereco.DadosCadastroEndereco;
+import com.curso.alura.domain.endereco.DadosCadastroEndereco;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 
 public record DadosAlteracaoPaciente(
 

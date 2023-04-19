@@ -1,6 +1,6 @@
 package com.curso.alura.controller;
 
-import com.curso.alura.medico.*;
+import com.curso.alura.domain.medico.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/medicos")
@@ -37,38 +35,24 @@ public class MedicoController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity atualizar(@PathVariable Long id, @RequestBody @Valid DadosAtualizacaoMedico dadosAtualizacaoMedico){
-        var optionalMedico = repository.findById(id);
-        if(!optionalMedico.isPresent()){
-            return ResponseEntity.status(NOT_FOUND).body("Médico Não encontrado.");
-        }else{
-            Medico medico = optionalMedico.get();
-            medico.atualizarInfomacoes(dadosAtualizacaoMedico);
-            return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
-        }
+        var medico = repository.getReferenceById(id);
+        medico.atualizarInfomacoes(dadosAtualizacaoMedico);
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
     }
 
 
     @GetMapping("/{id}")
     public ResponseEntity detalhar(@PathVariable Long id){
-        var optionalMedico = repository.findById(id);
-        if(!optionalMedico.isPresent()){
-            return ResponseEntity.status(NOT_FOUND).body("Médico Não encontrado.");
-        }else{
-            Medico medico = optionalMedico.get();
-            return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
-        }
+        var medico = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
     }
 
     @DeleteMapping("{id}")
     @Transactional
     public ResponseEntity desativar(@PathVariable Long id){
-        var optionalMedico = repository.findById(id);
-        if(!optionalMedico.isPresent()){
-            return ResponseEntity.status(NOT_FOUND).body("Médico Não encontrado.");
-        }else{
-            Medico medico = optionalMedico.get();
-            medico.desativar();
-            return ResponseEntity.noContent().build();
-        }
+        var medico = repository.getReferenceById(id);
+        medico.desativar();
+        return ResponseEntity.noContent().build();
     }
+
 }

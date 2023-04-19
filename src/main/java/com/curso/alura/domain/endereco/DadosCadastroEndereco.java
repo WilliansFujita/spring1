@@ -1,4 +1,4 @@
-package com.curso.alura.endereco;
+package com.curso.alura.domain.endereco;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

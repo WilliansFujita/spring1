@@ -1,7 +1,9 @@
 package com.curso.alura.controller;
 
-import com.curso.alura.paciente.*;
-import jakarta.validation.ReportAsSingleViolation;
+import com.curso.alura.domain.paciente.DadoListagemPaciente;
+import com.curso.alura.domain.paciente.Paciente;
+import com.curso.alura.domain.paciente.PacienteRepository;
+import com.curso.alura.domain.paciente.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

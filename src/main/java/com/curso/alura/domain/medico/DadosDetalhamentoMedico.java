@@ -1,8 +1,6 @@
-package com.curso.alura.medico;
+package com.curso.alura.domain.medico;
 
-import com.curso.alura.endereco.Endereco;
-import com.curso.alura.medico.Especialidade;
-import com.curso.alura.medico.Medico;
+import com.curso.alura.domain.endereco.Endereco;
 
 public record DadosDetalhamentoMedico(Long id,
                                       String nome,
