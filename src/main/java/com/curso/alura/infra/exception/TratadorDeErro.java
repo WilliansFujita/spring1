@@ -1,4 +1,4 @@
-package com.curso.alura.infra;
+package com.curso.alura.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
